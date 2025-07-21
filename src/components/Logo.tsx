@@ -10,7 +10,6 @@ export default function ApplyDigitalLogo({
       viewBox="0 0 1536 173"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      width="100%"
       className={className}
       preserveAspectRatio="xMidYMid meet"
     >
