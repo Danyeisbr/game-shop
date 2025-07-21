@@ -1,7 +1,7 @@
 "use client";
 
 import { gameService } from "../services/gameService";
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 
 interface GenreFilterProps {
   selectedGenre: string;
@@ -12,7 +12,11 @@ export default function GenreFilter({
   selectedGenre,
   onGenreChange,
 }: GenreFilterProps) {
-  const genres = useMemo(() => gameService.getAvailableGenres(), []);
+  const [genres, setGenres] = useState<string[]>(["All"]);
+
+  useEffect(() => {
+    gameService.getAvailableGenres().then(setGenres);
+  }, []);
 
   return (
     <div className="flex items-center space-x-2">

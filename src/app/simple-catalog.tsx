@@ -1,33 +1,44 @@
 "use client";
 
+import { useSearchParams, useRouter } from "next/navigation";
 import LoadingSpinner from "../components/LoadingSpinner";
+import { useState, useEffect, useCallback } from "react";
 import { gameService } from "../services/gameService";
 import GenreFilter from "../components/GenreFilter";
 import GameCard from "../components/GameCard";
-import { useState, useEffect } from "react";
 import type { Game } from "../types/game";
 
 export default function SimpleCatalog() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+
+  const initialGenre = searchParams.get("genre") || "All";
+  const initialPage = parseInt(searchParams.get("page") || "1", 10);
+
   const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [selectedGenre, setSelectedGenre] = useState("All");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [selectedGenre, setSelectedGenre] = useState(initialGenre);
+  const [currentPage, setCurrentPage] = useState(initialPage);
   const [hasMore, setHasMore] = useState(true);
+
+  const updateUrl = useCallback(
+    (genre: string, page: number) => {
+      const params = new URLSearchParams();
+      if (genre && genre !== "All") params.set("genre", genre);
+      params.set("page", page.toString());
+      router.replace(`?${params.toString()}`);
+    },
+    [router]
+  );
 
   const loadGames = async (genre: string, page: number, reset = false) => {
     try {
       setLoading(true);
       setError(null);
-
+      if (reset) setGames([]);
       const response = await gameService.getGames(genre, page);
-
-      if (reset || page === 1) {
-        setGames(response.games);
-      } else {
-        setGames((prev) => [...prev, ...response.games]);
-      }
-
+      setGames(response.games);
       setHasMore(response.hasMore);
     } catch (error) {
       console.error("Error loading games:", error);
@@ -38,26 +49,30 @@ export default function SimpleCatalog() {
   };
 
   useEffect(() => {
-    loadGames("All", 1, true);
-  }, []);
+    setSelectedGenre(initialGenre);
+    setCurrentPage(initialPage);
+    loadGames(initialGenre, initialPage, true);
+  }, [initialGenre, initialPage]);
 
   const handleGenreChange = async (genre: string) => {
     setSelectedGenre(genre);
     setCurrentPage(1);
+    updateUrl(genre, 1);
     await loadGames(genre, 1, true);
   };
 
   const handleSeeMore = async () => {
     const nextPage = currentPage + 1;
     setCurrentPage(nextPage);
-    await loadGames(selectedGenre, nextPage, false);
+    updateUrl(selectedGenre, nextPage);
+    await loadGames(selectedGenre, nextPage, true);
   };
 
   const handleRetry = () => {
     loadGames(selectedGenre, 1, true);
   };
 
-  if (loading && games.length === 0) {
+  if (loading) {
     return <LoadingSpinner />;
   }
 
@@ -102,14 +117,19 @@ export default function SimpleCatalog() {
           </div>
 
           {hasMore && (
-            <div>
+            <div className="relative">
               <button
                 onClick={handleSeeMore}
                 disabled={loading}
                 className="w-full md:w-auto bg-gray-800 text-white px-6 py-2 rounded hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {loading ? "Loading..." : "SEE MORE"}
+                {loading ? "" : "SEE MORE"}
               </button>
+              {loading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-80 z-10">
+                  <LoadingSpinner />
+                </div>
+              )}
             </div>
           )}
         </>

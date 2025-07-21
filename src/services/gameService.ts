@@ -1,42 +1,35 @@
-import { allGames, availableFilters, delay } from "../utils/endpoint";
-import type { GamesResponse } from "../types/game";
+import { Game } from "../types/game";
+import { API_URL } from "../config/api";
+
+export interface GamesResponse {
+  games: Game[];
+  hasMore: boolean;
+  total: number;
+  totalPages?: number;
+  currentPage?: number;
+}
 
 class GameService {
-  private itemsPerPage = 9;
+  private itemsPerPage = 12;
 
   async getGames(genre = "All", page = 1): Promise<GamesResponse> {
     try {
-      console.log("Loading games from mock data:", { genre, page });
-
-      await delay(500);
-
-      let filteredGames = allGames;
-      if (genre !== "All") {
-        filteredGames = allGames.filter(
-          (game) => game.genre.toLowerCase() === genre.toLowerCase()
-        );
-      }
-
-      const startIndex = (page - 1) * this.itemsPerPage;
-      const endIndex = startIndex + this.itemsPerPage;
-      const paginatedGames = filteredGames.slice(startIndex, endIndex);
-
-      const response = {
-        games: paginatedGames,
-        hasMore: endIndex < filteredGames.length,
-        total: filteredGames.length,
+      const params = new URLSearchParams();
+      if (genre && genre !== "All") params.append("genre", genre);
+      params.append("page", page.toString());
+      const url = `${API_URL}/games?${params.toString()}`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Failed to fetch games");
+      const data = await res.json();
+      return {
+        games: data.games,
+        hasMore: data.currentPage < data.totalPages,
+        total: data.games.length,
+        totalPages: data.totalPages,
+        currentPage: data.currentPage,
       };
-
-      console.log("Mock API Response:", {
-        gamesCount: response.games.length,
-        hasMore: response.hasMore,
-        total: response.total,
-      });
-
-      return response;
     } catch (error) {
-      console.error("Error loading games from mock:", error);
-
+      console.error("Error loading games from API:", error);
       return {
         games: [],
         hasMore: false,
@@ -45,8 +38,17 @@ class GameService {
     }
   }
 
-  getAvailableGenres(): string[] {
-    return ["All", ...availableFilters];
+  async getAvailableGenres(): Promise<string[]> {
+    try {
+      const url = `${API_URL}/games`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Failed to fetch genres");
+      const data = await res.json();
+      return ["All", ...data.availableFilters];
+    } catch (error) {
+      console.error("Error loading genres from API:", error);
+      return ["All"];
+    }
   }
 }
 
