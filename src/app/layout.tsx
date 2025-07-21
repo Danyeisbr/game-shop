@@ -1,4 +1,6 @@
 import { Inter } from "next/font/google";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 import "./globals.css";
 
@@ -17,7 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning>
-        {children}
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-1 bg-gray-50">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

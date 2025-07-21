@@ -1,7 +1,13 @@
-export default async function Home() {
+"use client";
+
+import LoadingSpinner from "../components/LoadingSpinner";
+import SimpleCatalog from "./simple-catalog";
+import { Suspense } from "react";
+
+export default function Page() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24 font-bold text-4xl text-blue-600">
-      Hello, world!
-    </main>
+    <Suspense fallback={<LoadingSpinner />}>
+      <SimpleCatalog />
+    </Suspense>
   );
 }
