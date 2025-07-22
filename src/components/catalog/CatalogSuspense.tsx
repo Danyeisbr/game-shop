@@ -1,5 +1,5 @@
-import LoadingSpinner from "./LoadingSpinner";
-import GameList from "./GameList";
+import LoadingSpinner from "@/components/shared/LoadingSpinner";
+import GameList from "@/components/game/GameList";
 import { Suspense } from "react";
 
 export default function CatalogSuspense() {

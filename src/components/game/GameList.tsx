@@ -1,12 +1,12 @@
 "use client";
 
+import CatalogPagination from "@/components/catalog/CatalogPagination";
 import { CATALOG_TITLE, NO_GAMES_FOUND } from "@/constants/resources";
+import LoadingSpinner from "@/components/shared/LoadingSpinner";
+import CatalogHeader from "@/components/catalog/CatalogHeader";
+import CatalogError from "@/components/catalog/CatalogError";
+import EmptyCatalog from "@/components/catalog/EmptyCatalog";
 import { useGameCatalog } from "@/hooks/useGameCatalog";
-import CatalogPagination from "./CatalogPagination";
-import LoadingSpinner from "./LoadingSpinner";
-import CatalogHeader from "./CatalogHeader";
-import CatalogError from "./CatalogError";
-import EmptyCatalog from "./EmptyCatalog";
 import GameGrid from "./GameGrid";
 
 export default function GameList() {

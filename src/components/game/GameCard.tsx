@@ -1,7 +1,7 @@
 "use client";
 
+import CartActionButton from "@/components/cart/CartActionButton";
 import { useCartStatus } from "@/hooks/useCartStatus";
-import CartActionButton from "./CartActionButton";
 import type { GameCardProps } from "@/types";
 import GameImage from "./GameImage";
 import GameInfo from "./GameInfo";

@@ -1,4 +1,4 @@
-import AppShell from "@/components/AppShell";
+import AppShell from "@/components/layout/AppShell";
 import type { WithChildren } from "@/types";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";

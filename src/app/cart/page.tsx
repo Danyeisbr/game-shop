@@ -1,9 +1,9 @@
 "use client";
 
 import { CART_TITLE, CART_ITEMS, BACK_TO_CATALOG } from "@/constants/resources";
-import OrderSummary from "@/components/OrderSummary";
-import CartEmpty from "@/components/CartEmpty";
-import CartItem from "@/components/CartItem";
+import OrderSummary from "@/components/cart/OrderSummary";
+import CartEmpty from "@/components/cart/CartEmpty";
+import CartItem from "@/components/cart/CartItem";
 import { useCart } from "@/hooks/useCart";
 import Link from "next/link";
 
