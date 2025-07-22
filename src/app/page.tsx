@@ -1,13 +1,5 @@
-"use client";
+import CatalogSuspense from "@/components/CatalogSuspense";
 
-import LoadingSpinner from "../components/LoadingSpinner";
-import SimpleCatalog from "./simple-catalog";
-import { Suspense } from "react";
-
-export default function Page() {
-  return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <SimpleCatalog />
-    </Suspense>
-  );
+export default function Home() {
+  return <CatalogSuspense />;
 }
