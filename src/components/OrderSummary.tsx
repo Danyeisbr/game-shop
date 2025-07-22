@@ -4,7 +4,7 @@ import {
   ORDER_TOTAL,
   CHECKOUT,
   CART_ITEMS,
-} from "@/constants/texts";
+} from "@/constants/resources";
 
 export default function OrderSummary({ items, total }: OrderSummaryProps) {
   return (

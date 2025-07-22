@@ -1,13 +1,8 @@
 "use client";
 
-import type { Game } from "../types/game";
+import type { CartItemProps } from "@/types";
 import { X } from "lucide-react";
 import Image from "next/image";
-
-interface CartItemProps {
-  game: Game;
-  onRemove: (gameId: string) => void;
-}
 
 export default function CartItem({ game, onRemove }: CartItemProps) {
   return (

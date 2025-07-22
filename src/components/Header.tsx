@@ -1,4 +1,4 @@
-import { APP_NAME } from "@/constants/texts";
+import { APP_NAME } from "@/constants/resources";
 import { ShoppingCart } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import NavLink from "@/components/NavLink";

@@ -1,5 +1,5 @@
 import type { CatalogErrorProps } from "@/types";
-import { TRY_AGAIN } from "@/constants/texts";
+import { TRY_AGAIN } from "@/constants/resources";
 
 export default function CatalogError({ message, onRetry }: CatalogErrorProps) {
   return (

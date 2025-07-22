@@ -1,53 +1,57 @@
 import type { Game } from "@/types";
+import {
+  CART_STORAGE_KEY,
+  ERROR_CONTEXT_READING_CART,
+  ERROR_CONTEXT_ADDING_TO_CART,
+  ERROR_CONTEXT_REMOVING_FROM_CART,
+  ERROR_CONTEXT_CLEARING_CART,
+  PRODUCTION_ENV,
+} from "@/constants/resources";
 
 class CartService {
-  private storageKey = "gamershop-cart";
+  private storageKey = CART_STORAGE_KEY;
 
   getCartItems(): Game[] {
     if (typeof window === "undefined") return [];
-
     try {
       const items = localStorage.getItem(this.storageKey);
-      return items ? JSON.parse(items) : [];
+      const parsed = items ? JSON.parse(items) : [];
+      if (Array.isArray(parsed)) {
+        return parsed;
+      }
+      return [];
     } catch (error) {
-      console.error("Error reading cart from localStorage:", error);
+      this.logError(ERROR_CONTEXT_READING_CART, error);
       return [];
     }
   }
 
   addToCart(game: Game): void {
     if (typeof window === "undefined") return;
-
     try {
       const items = this.getCartItems();
-      const existingItem = items.find((item) => item.id === game.id);
-
-      if (!existingItem) {
-        items.push(game);
-        localStorage.setItem(this.storageKey, JSON.stringify(items));
-        console.log("Added to cart:", game.name);
+      if (!items.some((item) => item.id === game.id)) {
+        const updated = [...items, game];
+        localStorage.setItem(this.storageKey, JSON.stringify(updated));
       }
     } catch (error) {
-      console.error("Error adding to cart:", error);
+      this.logError(ERROR_CONTEXT_ADDING_TO_CART, error);
     }
   }
 
   removeFromCart(gameId: string): void {
     if (typeof window === "undefined") return;
-
     try {
       const items = this.getCartItems();
-      const filteredItems = items.filter((item) => item.id !== gameId);
-      localStorage.setItem(this.storageKey, JSON.stringify(filteredItems));
-      console.log("Removed from cart:", gameId);
+      const updated = items.filter((item) => item.id !== gameId);
+      localStorage.setItem(this.storageKey, JSON.stringify(updated));
     } catch (error) {
-      console.error("Error removing from cart:", error);
+      this.logError(ERROR_CONTEXT_REMOVING_FROM_CART, error);
     }
   }
 
   isInCart(gameId: string): boolean {
-    const items = this.getCartItems();
-    return items.some((item) => item.id === gameId);
+    return this.getCartItems().some((item) => item.id === gameId);
   }
 
   getCartCount(): number {
@@ -56,12 +60,16 @@ class CartService {
 
   clearCart(): void {
     if (typeof window === "undefined") return;
-
     try {
       localStorage.removeItem(this.storageKey);
-      console.log("Cart cleared");
     } catch (error) {
-      console.error("Error clearing cart:", error);
+      this.logError(ERROR_CONTEXT_CLEARING_CART, error);
+    }
+  }
+
+  private logError(context: string, error: unknown) {
+    if (process.env.NODE_ENV !== PRODUCTION_ENV) {
+      console.error(`Error ${context}:`, error);
     }
   }
 }

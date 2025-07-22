@@ -1,6 +1,6 @@
 "use client";
 
-import { CART_TITLE, CART_ITEMS, BACK_TO_CATALOG } from "@/constants/texts";
+import { CART_TITLE, CART_ITEMS, BACK_TO_CATALOG } from "@/constants/resources";
 import OrderSummary from "@/components/OrderSummary";
 import CartEmpty from "@/components/CartEmpty";
 import CartItem from "@/components/CartItem";

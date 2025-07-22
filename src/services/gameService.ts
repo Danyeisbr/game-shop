@@ -1,27 +1,41 @@
 import { GamesResponse } from "@/types";
 import { API_URL } from "../config/api";
+import {
+  DEFAULT_GENRE,
+  ERROR_FETCH_GAMES,
+  ERROR_FETCH_GENRES,
+  GENRE_PARAM,
+  PAGE_PARAM,
+  ERROR_CONTEXT_LOADING_GAMES,
+  ERROR_CONTEXT_LOADING_GENRES,
+  PRODUCTION_ENV,
+} from "@/constants/resources";
 
 class GameService {
-  private itemsPerPage = 12;
-
-  async getGames(genre = "All", page = 1): Promise<GamesResponse> {
+  async getGames(
+    genre: string = DEFAULT_GENRE,
+    page: number = 1
+  ): Promise<GamesResponse> {
     try {
-      const params = new URLSearchParams();
-      if (genre && genre !== "All") params.append("genre", genre);
-      params.append("page", page.toString());
-      const url = `${API_URL}/games?${params.toString()}`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error("Failed to fetch games");
+      const params: URLSearchParams = new URLSearchParams();
+      if (genre && genre !== DEFAULT_GENRE) params.append(GENRE_PARAM, genre);
+      params.append(PAGE_PARAM, page.toString());
+      const url: string = `${API_URL}/games?${params.toString()}`;
+      const res: Response = await fetch(url);
+      if (!res.ok) throw new Error(ERROR_FETCH_GAMES);
       const data = await res.json();
       return {
         games: data.games,
-        hasMore: data.currentPage < data.totalPages,
+        hasMore:
+          data.currentPage &&
+          data.totalPages &&
+          data.currentPage < data.totalPages,
         total: data.games.length,
         totalPages: data.totalPages,
-        currentPage: data.currentPage,
+        currentPage: data.currentPage || 1,
       };
     } catch (error) {
-      console.error("Error loading games from API:", error);
+      this.logError(ERROR_CONTEXT_LOADING_GAMES, error);
       return {
         games: [],
         hasMore: false,
@@ -32,14 +46,20 @@ class GameService {
 
   async getAvailableGenres(): Promise<string[]> {
     try {
-      const url = `${API_URL}/games`;
-      const res = await fetch(url);
-      if (!res.ok) throw new Error("Failed to fetch genres");
-      const data = await res.json();
-      return ["All", ...data.availableFilters];
+      const url: string = `${API_URL}/games`;
+      const res: Response = await fetch(url);
+      if (!res.ok) throw new Error(ERROR_FETCH_GENRES);
+      const data: { availableFilters: string[] } = await res.json();
+      return [DEFAULT_GENRE, ...data.availableFilters];
     } catch (error) {
-      console.error("Error loading genres from API:", error);
-      return ["All"];
+      this.logError(ERROR_CONTEXT_LOADING_GENRES, error);
+      return [DEFAULT_GENRE];
+    }
+  }
+
+  private logError(context: string, error: unknown) {
+    if (process.env.NODE_ENV !== PRODUCTION_ENV) {
+      console.error(`Error ${context}:`, error);
     }
   }
 }

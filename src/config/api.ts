@@ -1,2 +1,3 @@
-export const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+import { DEFAULT_API_URL } from "@/constants/resources";
+
+export const API_URL = process.env.NEXT_PUBLIC_API_URL || DEFAULT_API_URL;

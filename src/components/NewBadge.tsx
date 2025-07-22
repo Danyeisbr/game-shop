@@ -1,4 +1,4 @@
-import { NEW_LABEL } from "@/constants/texts";
+import { NEW_LABEL } from "@/constants/resources";
 
 export default function NewBadge() {
   return (

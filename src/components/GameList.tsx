@@ -1,6 +1,6 @@
 "use client";
 
-import { CATALOG_TITLE, NO_GAMES_FOUND } from "@/constants/texts";
+import { CATALOG_TITLE, NO_GAMES_FOUND } from "@/constants/resources";
 import { useGameCatalog } from "@/hooks/useGameCatalog";
 import CatalogPagination from "./CatalogPagination";
 import LoadingSpinner from "./LoadingSpinner";

@@ -38,6 +38,7 @@ export interface GameInfoProps {
 export interface GameImageProps {
   src?: string;
   alt: string;
+  priority?: boolean;
 }
 
 export interface GenreSelectProps {
@@ -102,4 +103,13 @@ export interface UseGameCatalogResult {
 export interface OrderSummaryProps {
   items: Game[];
   total: number;
+}
+
+export interface GameCardProps {
+  game: Game;
+}
+
+export interface CartItemProps {
+  game: Game;
+  onRemove: (gameId: string) => void;
 }

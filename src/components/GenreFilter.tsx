@@ -1,6 +1,6 @@
 "use client";
 
-import { GENRE_LABEL } from "@/constants/texts";
+import { GENRE_LABEL } from "@/constants/resources";
 import type { GenreFilterProps } from "@/types";
 import { useGenres } from "@/hooks/useGenres";
 import GenreSelect from "./GenreSelect";

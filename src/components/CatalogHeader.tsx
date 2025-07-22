@@ -1,4 +1,4 @@
-import { CATALOG_TITLE } from "@/constants/texts";
+import { CATALOG_TITLE } from "@/constants/resources";
 import type { CatalogHeaderProps } from "@/types";
 import GenreFilter from "./GenreFilter";
 

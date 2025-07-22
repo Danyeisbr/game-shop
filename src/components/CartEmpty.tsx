@@ -1,4 +1,4 @@
-import { CART_EMPTY, CONTINUE_SHOPPING } from "@/constants/texts";
+import { CART_EMPTY, CONTINUE_SHOPPING } from "@/constants/resources";
 import Link from "next/link";
 
 export default function CartEmpty() {

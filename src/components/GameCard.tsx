@@ -2,22 +2,22 @@
 
 import { useCartStatus } from "@/hooks/useCartStatus";
 import CartActionButton from "./CartActionButton";
-import type { Game } from "../types/game";
+import type { GameCardProps } from "@/types";
 import GameImage from "./GameImage";
 import GameInfo from "./GameInfo";
 import NewBadge from "./NewBadge";
 
-interface GameCardProps {
-  game: Game;
-}
 
-export default function GameCard({ game }: GameCardProps) {
+export default function GameCard({
+  game,
+  priority = false,
+}: GameCardProps & { priority?: boolean }) {
   const { isInCart, toggleCart } = useCartStatus(game);
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
       <div className="relative">
-        <GameImage src={game.image} alt={game.name} />
+        <GameImage src={game.image} alt={game.name} priority={priority} />
         {game.isNew && <NewBadge />}
       </div>
 

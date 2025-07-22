@@ -1,5 +1,5 @@
+import { DEFAULT_GENRE } from "@/constants/resources";
 import { gameService } from "@/services/gameService";
-import { DEFAULT_GENRE } from "@/constants/texts";
 import { useEffect, useState } from "react";
 
 export function useGenres() {

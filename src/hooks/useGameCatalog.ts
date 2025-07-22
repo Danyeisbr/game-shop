@@ -8,14 +8,15 @@ import {
   PAGE_PARAM,
   GENRE_PARAM,
   INITIAL_PAGE,
-} from "@/constants/texts";
+  PRODUCTION_ENV,
+} from "@/constants/resources";
 
 export function useGameCatalog(): UseGameCatalogResult {
-  const searchParams = useSearchParams();
+  const searchParams: URLSearchParams = useSearchParams();
   const router = useRouter();
 
-  const initialGenre = searchParams.get(GENRE_PARAM) || DEFAULT_GENRE;
-  const initialPage = parseInt(
+  const initialGenre: string = searchParams.get(GENRE_PARAM) || DEFAULT_GENRE;
+  const initialPage: number = parseInt(
     searchParams.get(PAGE_PARAM) || `${INITIAL_PAGE}`,
     10
   );
@@ -29,7 +30,7 @@ export function useGameCatalog(): UseGameCatalogResult {
 
   const updateUrl = useCallback(
     (genre: string, page: number) => {
-      const params = new URLSearchParams();
+      const params: URLSearchParams = new URLSearchParams();
       if (genre && genre !== DEFAULT_GENRE) params.set(GENRE_PARAM, genre);
       params.set(PAGE_PARAM, page.toString());
       router.replace(`?${params.toString()}`);
@@ -37,7 +38,7 @@ export function useGameCatalog(): UseGameCatalogResult {
     [router]
   );
 
-  const loadGames = async (genre: string, page: number, reset = false) => {
+  const loadGames = async (genre: string, page: number, reset: boolean = false) => {
     try {
       setLoading(true);
       setError(null);
@@ -46,7 +47,7 @@ export function useGameCatalog(): UseGameCatalogResult {
       setGames(response.games);
       setHasMore(response.hasMore);
     } catch (error) {
-      if (process.env.NODE_ENV !== "production") {
+      if (process.env.NODE_ENV !== PRODUCTION_ENV) {
         console.error(error);
       }
       setError(ERROR_LOADING);
@@ -69,7 +70,7 @@ export function useGameCatalog(): UseGameCatalogResult {
   };
 
   const handleSeeMore = async () => {
-    const nextPage = currentPage + 1;
+    const nextPage: number = currentPage + 1;
     setCurrentPage(nextPage);
     updateUrl(selectedGenre, nextPage);
     await loadGames(selectedGenre, nextPage, true);

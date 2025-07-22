@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART } from "@/constants/texts";
+import { ADD_TO_CART, REMOVE_FROM_CART } from "@/constants/resources";
 import type { CartActionButtonProps } from "@/types";
 
 export default function CartActionButton({

@@ -1,7 +1,7 @@
 import type { CatalogPaginationProps } from "@/types";
 import PaginationButton from "./PaginationButton";
+import { SEE_MORE } from "@/constants/resources";
 import LoadingOverlay from "./LoadingOverlay";
-import { SEE_MORE } from "@/constants/texts";
 
 export default function CatalogPagination({
   loading,
