@@ -10,6 +10,7 @@ export default function ApplyDigitalLogo({
       xmlns="http://www.w3.org/2000/svg"
       className={className}
       preserveAspectRatio="xMidYMid meet"
+      aria-label="Logo"
     >
       <rect width="1536" height="172.092" fill="#404040" />
       <path
