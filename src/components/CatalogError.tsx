@@ -1,12 +1,7 @@
+import type { CatalogErrorProps } from "@/types";
 import { TRY_AGAIN } from "@/constants/texts";
 
-export default function CatalogError({
-  message,
-  onRetry,
-}: {
-  message: string;
-  onRetry: () => void;
-}) {
+export default function CatalogError({ message, onRetry }: CatalogErrorProps) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="text-center">

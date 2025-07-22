@@ -1,7 +1,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
+import type { Game, UseGameCatalogResult } from "@/types";
 import { useState, useEffect, useCallback } from "react";
 import { gameService } from "@/services/gameService";
-import type { Game } from "@/types/game";
 import {
   ERROR_LOADING,
   DEFAULT_GENRE,
@@ -10,7 +10,7 @@ import {
   INITIAL_PAGE,
 } from "@/constants/texts";
 
-export function useGameCatalog() {
+export function useGameCatalog(): UseGameCatalogResult {
   const searchParams = useSearchParams();
   const router = useRouter();
 

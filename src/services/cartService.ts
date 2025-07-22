@@ -1,4 +1,4 @@
-import type { Game } from "../types/game";
+import type { Game } from "@/types";
 
 class CartService {
   private storageKey = "gamershop-cart";

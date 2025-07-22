@@ -1,13 +1,5 @@
-import { Game } from "../types/game";
+import { GamesResponse } from "@/types";
 import { API_URL } from "../config/api";
-
-export interface GamesResponse {
-  games: Game[];
-  hasMore: boolean;
-  total: number;
-  totalPages?: number;
-  currentPage?: number;
-}
 
 class GameService {
   private itemsPerPage = 12;

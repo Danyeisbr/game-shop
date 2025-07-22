@@ -1,4 +1,5 @@
 import AppShell from "@/components/AppShell";
+import type { WithChildren } from "@/types";
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
@@ -10,11 +11,7 @@ export const metadata: Metadata = {
   description: "Frontend development test for Apply Digital",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: WithChildren) {
   return (
     <html lang="en">
       <body className={inter.className} suppressHydrationWarning>

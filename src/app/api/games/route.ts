@@ -17,7 +17,7 @@ export async function GET(request: Request) {
 
   if (page < 1 || isNaN(page)) page = 1;
 
-  await delay(2000);
+  await delay(1000);
 
   const fromIndex = (page - 1) * ITEMS_PER_PAGE;
   const toIndex = page * ITEMS_PER_PAGE;

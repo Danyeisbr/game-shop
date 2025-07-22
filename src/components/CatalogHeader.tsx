@@ -1,11 +1,6 @@
 import { CATALOG_TITLE } from "@/constants/texts";
+import type { CatalogHeaderProps } from "@/types";
 import GenreFilter from "./GenreFilter";
-
-interface CatalogHeaderProps {
-  title?: string;
-  selectedGenre: string;
-  onGenreChange: (genre: string) => void;
-}
 
 export default function CatalogHeader({
   title = CATALOG_TITLE,

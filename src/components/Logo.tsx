@@ -1,6 +1,4 @@
-interface ApplyDigitalLogoProps {
-  className?: string;
-}
+import type { ApplyDigitalLogoProps } from "@/types";
 
 export default function ApplyDigitalLogo({
   className = "",

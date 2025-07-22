@@ -1,14 +1,7 @@
+import type { NavLinkProps } from "@/types";
 import Link from "next/link";
 
-export default function NavLink({
-  href,
-  className,
-  children,
-}: {
-  href: string;
-  className?: string;
-  children?: React.ReactNode;
-}) {
+export default function NavLink({ href, className, children }: NavLinkProps) {
   return (
     <Link href={href} className={className}>
       {children}

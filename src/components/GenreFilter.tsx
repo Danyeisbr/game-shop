@@ -1,22 +1,15 @@
 "use client";
 
-import { gameService } from "../services/gameService";
-import { useEffect, useState } from "react";
-
-interface GenreFilterProps {
-  selectedGenre: string;
-  onGenreChange: (genre: string) => void;
-}
+import { GENRE_LABEL } from "@/constants/texts";
+import type { GenreFilterProps } from "@/types";
+import { useGenres } from "@/hooks/useGenres";
+import GenreSelect from "./GenreSelect";
 
 export default function GenreFilter({
   selectedGenre,
   onGenreChange,
 }: GenreFilterProps) {
-  const [genres, setGenres] = useState<string[]>(["All"]);
-
-  useEffect(() => {
-    gameService.getAvailableGenres().then(setGenres);
-  }, []);
+  const genres = useGenres();
 
   return (
     <div className="flex items-center space-x-2">
@@ -24,20 +17,13 @@ export default function GenreFilter({
         htmlFor="genre-select"
         className="text-sm font-medium text-gray-700"
       >
-        Genre:
+        {GENRE_LABEL}
       </label>
-      <select
-        id="genre-select"
-        value={selectedGenre}
-        onChange={(e) => onGenreChange(e.target.value)}
-        className="border border-gray-300 rounded px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
-      >
-        {genres.map((genre) => (
-          <option key={genre} value={genre}>
-            {genre}
-          </option>
-        ))}
-      </select>
+      <GenreSelect
+        genres={genres}
+        selectedGenre={selectedGenre}
+        onChange={onGenreChange}
+      />
     </div>
   );
 }
