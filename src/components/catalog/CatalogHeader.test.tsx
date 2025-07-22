@@ -33,7 +33,6 @@ describe("CatalogHeader", () => {
 
   afterAll(() => {
     jest.restoreAllMocks();
-    // Limpia el mock de fetch
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     delete global.fetch;

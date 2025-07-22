@@ -14,7 +14,7 @@ export function useCart() {
     setCartItems(cartService.getCartItems());
   };
 
-  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
+  const total: number = cartItems.reduce((sum, item) => sum + item.price, 0);
 
   return { cartItems, removeItem, total };
 }

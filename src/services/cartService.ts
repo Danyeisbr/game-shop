@@ -9,13 +9,13 @@ import {
 } from "@/constants/resources";
 
 class CartService {
-  private storageKey = CART_STORAGE_KEY;
+  private storageKey: string = CART_STORAGE_KEY;
 
   getCartItems(): Game[] {
     if (typeof window === "undefined") return [];
     try {
-      const items = localStorage.getItem(this.storageKey);
-      const parsed = items ? JSON.parse(items) : [];
+      const items: string | null = localStorage.getItem(this.storageKey);
+      const parsed: Game[] = items ? JSON.parse(items) : [];
       if (Array.isArray(parsed)) {
         return parsed;
       }
@@ -29,9 +29,9 @@ class CartService {
   addToCart(game: Game): void {
     if (typeof window === "undefined") return;
     try {
-      const items = this.getCartItems();
+      const items: Game[] = this.getCartItems();
       if (!items.some((item) => item.id === game.id)) {
-        const updated = [...items, game];
+        const updated: Game[] = [...items, game];
         localStorage.setItem(this.storageKey, JSON.stringify(updated));
       }
     } catch (error) {
@@ -42,8 +42,8 @@ class CartService {
   removeFromCart(gameId: string): void {
     if (typeof window === "undefined") return;
     try {
-      const items = this.getCartItems();
-      const updated = items.filter((item) => item.id !== gameId);
+      const items: Game[] = this.getCartItems();
+      const updated: Game[] = items.filter((item) => item.id !== gameId);
       localStorage.setItem(this.storageKey, JSON.stringify(updated));
     } catch (error) {
       this.logError(ERROR_CONTEXT_REMOVING_FROM_CART, error);

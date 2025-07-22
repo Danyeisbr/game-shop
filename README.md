@@ -75,6 +75,11 @@ Game Shop is a responsive web application built with React 19 and Next.js 15, de
 
 - The app is deployed on Vercel and accessible online. Simply connect your GitHub repository and follow the Vercel deployment flow for future updates.
 
+**Live Demo**:  
+This is the deployed project on Vercel. You can access and interact with the application at the following URL:
+
+[https://game-shop-three-tau.vercel.app/](https://game-shop-three-tau.vercel.app/)
+
 ## Future Improvements
 
 With more time, the following enhancements could be implemented:
